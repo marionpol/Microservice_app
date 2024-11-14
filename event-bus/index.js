@@ -12,13 +12,10 @@ app.post('/events', (req, res) => {
 
     events.push(event);
 
-    axios.post('http:/localhost:4000/events', event);
-    axios.post('http:/localhost:4001/events', event);
-    axios.post('http:/localhost:4002/events', event);
-    axios.post('http:/localhost:4003/events', event);
-
-    axios.post('http:/2932.34.4.325.5:4006/events', event);
-    axios.post('http:/234..234..23..2:4007/events', event);
+    axios.post('http://posts-cluster-ip-srv:4000/events', event);
+    axios.post('http://comments-srv:4001/events', event);
+    axios.post('http://query-srv:4002/events', event);
+    axios.post('http://moderation-srv:4003/events', event);
 
     res.send({ status: 'OK'});
 })

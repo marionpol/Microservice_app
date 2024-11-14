@@ -1,13 +1,13 @@
 import React, { useState} from "react";
 import axios from 'axios';
 
-export default   () =>{
+const PostCreate = () =>{
     const [title, setTitle] = useState('');
 
     const onSubmit = async event => {
         event.preventDefault();
 
-        await axios.post('http://localhost:4000/posts', {
+        await axios.post('http://posts.com/posts/create', {
             title
         });
 
@@ -25,3 +25,5 @@ export default   () =>{
     </div>
     )
 }
+
+export default PostCreate;

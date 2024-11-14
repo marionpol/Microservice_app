@@ -1,10 +1,10 @@
 import React from "react";
 
-export default  ({ comments }) => {
+const CommentList = ({ comments }) => {
     const renderedComments = comments.map(comment => {
         let content;
 
-        if(comments.status === 'approved') {
+        if(comment.status === 'approved') {
             content = comment.content;
         }
 
@@ -25,3 +25,4 @@ export default  ({ comments }) => {
     
 };
 
+export default CommentList

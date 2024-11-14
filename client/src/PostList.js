@@ -4,11 +4,11 @@ import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
 
-export default () => {
+const PostList = () => {
 const [posts, setPosts] = useState({});
 
     const fetchPosts = async () => {
-        const res = await axios.get('http://localhost:4002/posts');
+        const res = await axios.get('http://posts.com/posts');
         console.log(res.data);
         setPosts(res.data);
     };
@@ -32,4 +32,6 @@ const [posts, setPosts] = useState({});
         {renderedPosts}
     </div> )
 };
+
+export default PostList
 

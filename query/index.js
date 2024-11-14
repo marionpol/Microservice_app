@@ -1,63 +1,45 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const axios = require ('axios');
+const express = require('express')
+const bodyParser = require('body-parser')
+const { randomBytes } = require('crypto')   
+const cors = require('cors')
+const axios = require('axios')
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+const app = express()
 
-const posts = {};
+app.use(bodyParser.json())
+app.use(cors())
 
-const handleEvent = (type, data) => {
-    if (type === 'PostCreated') {
-        const { id, title } = data;
-
-        posts[id] = { id, title, comments: []};
-    }
-
-    if (type === 'CommentCreated') {
-        const { id, content, postId, status } = data;
-
-        const post = posts[postId];
-        post.comments.push({ id, content, status});
-
-    }
-
-    if (type === 'CommentUpdated') {
-        const { id, content, postId, status } = data;
-
-        const post = posts[postId];
-        const comment = post.comments.find(comment => {
-            return comment.id === id;
-        })
-
-        comment.status = status;
-        comment.content = content;
-        
-    }
-}
+const posts = {}  
 
 app.get('/posts', (req, res) => {
-    res.send(posts);
+    res.send(posts)
+})
+app.post('/posts/create', async (req, res) => {
+    const id  = randomBytes(4).toString('hex')
+    const { title } = req.body 
+
+    posts[id] = {
+        id,
+        title
+    } 
+    
+await axios.post('http://event-bus-srv:4005/events', {
+    type: 'PostCreated',
+    data: {
+        id, title
+    } 
 })
 
-app.post('/events', (req, res) => {
-    const { type, data } = req.body;
-
-    handleEvent(type, data);
-
-    res.send({});
+    res.status(201).send(posts[id])
 })
 
-app.listen(4002, async () => {
-    console.log('Listening on 4002')
+app.post('/events',  (req, res) => {
+    console.log('Received Event', req.body.type)
 
-    const res = await axios.get('http:/localhost:4005/events')
+    res.send({})
+})
 
-    for (let event of res.data) {
-        console.log('Processing event: ', event.type);
-
-        handleEvent(event.type, event.data);
-    }
-});
+app.listen(4000, () => {
+    console.log('v55')
+    console.log('Listening on 4000')
+})
