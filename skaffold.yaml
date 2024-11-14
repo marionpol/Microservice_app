@@ -1,6 +1,6 @@
 apiVersion: skaffold/v2alpha3
 kind: Config
-deploy: 
+deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
@@ -10,49 +10,49 @@ build:
   artifacts:
     - image: marionpol/client
       context: client
-      docker: 
+      docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.js'
             dest: .
-     - image: marionpol/comments
-        context: comments
-        docker: 
-          dockerfile: Dockerfile
-        sync:
-          manual:
-            - src: '*.js'
-              dest: .
+    - image: marionpol/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
     - image: marionpol/event-bus
-        context: event-bus
-        docker: 
-          dockerfile: Dockerfile
-        sync:
-          manual:
-            - src: '*.js'
-              dest: .
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
     - image: marionpol/moderation
-        context: moderation
-        docker: 
-          dockerfile: Dockerfile
-        sync:
-          manual:
-            - src: '*.js'
-              dest: .
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
     - image: marionpol/posts
-        context: posts
-        docker: 
-          dockerfile: Dockerfile
-        sync:
-          manual:
-            - src: '*.js'
-              dest: .
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
     - image: marionpol/query
-        context: query
-        docker: 
-          dockerfile: Dockerfile
-        sync:
-          manual:
-            - src: '*.js'
-              dest: .
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
